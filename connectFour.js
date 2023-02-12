@@ -27,7 +27,9 @@ function makeHtmlBoard() {
     // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
     const board = document.getElementById("board")
     // TODO: add comment for this code
-    // This code creates the top row and each of it's cells, gives it an id="column-top", and adds the click listener(to be defined later) for each column where we will click to drop pieces, then appends it to the board
+    // This code creates the top row and each of it's cells,
+    // gives it an id="column-top", and adds the click listener(to be defined later) 
+    //for each column where we click to drop pieces, then appends it to the board
     const top = document.createElement("tr");
     top.setAttribute("id", "column-top");
     top.addEventListener("click", handleClick);
@@ -42,10 +44,13 @@ function makeHtmlBoard() {
     board.append(top);
 
     // TODO: add comment for this code
-    // A for loop that creates a row/"tr" for every iteration. Each "tr" is given an id that increment from 0-HEIGHT(HEIGHT = 6), starting with 0-0 first row, then 1-0 for second row, and so on. Then appends them to the board. 
-    //The variable y designates how many *rows in total*(both y and x depend on earlier designated HEIGHT/WIDTH).
+    // A for loop that creates a row every iteration.
+    // Each "tr" is id'd from 0-HEIGHT(HEIGHT = 6), starting with 0-0, 1-0 for second, and so on.
+    // Then appends them to the board. 
+    // Variable y holds how many *rows in total*(both y and x depend on earlier designated HEIGHT/WIDTH).
     // Variable x holds how many *cells per row.* 
-    //Next, the "td" are created, with id's set to their position in the table: we can examine the console html to see this displayed. When the rows and their cells are created we append them to the board, making main part of board.
+    // Then,"td" are created, with id's set to their position in the table, "y-x"
+    // We append rows/their cells to the board, making main part of board.
     for (let y = 0; y < HEIGHT; y++) {
         const row = document.createElement("tr");
         for (let x = 0; x < WIDTH; x++) {
@@ -62,7 +67,8 @@ function makeHtmlBoard() {
 function findSpotForCol(x) {
     // TODO: write the real version of this, rather than always returning 0
     // return 0;
-    // This code designates a "column" and how deep it is for piece placement, checking to see if it is already filled at any point
+    // Designates a column and depth for dropping game piece,
+    // working backward from bottom checking for first empty cell
     for (let y = HEIGHT - 1; y >= 0; y--) {
         if (!board[y][x]) {
             return y;
@@ -77,12 +83,11 @@ function placeInTable(y, x) {
     // TODO: make a div and insert into correct table cell
     const piece = document.createElement("div");
     piece.classList.add("piece");
-    piece.classList.add(`p${currPlayer}`);//designates which player dropped the piece
+    piece.classList.add(`p${currPlayer}`);//which player dropped the piece
     piece.style.top = -50 * (y + 2);// sets piece top -50 px from where it is placed in the table 
 
     const spot = document.getElementById(`${y}-${x}`);
     spot.append(piece);
-    // I originally had a problem with the click listener. At first, I thought it was not working at all, not listening for the click. After testing, I realized I had not appended the game piece upon the event of clicking. So, it wasn't the click listener, it was the div that that click creates. I created the click, but didn't finish ordering it "what to do."
 }
 
 /** endGame: announce game end */
@@ -108,16 +113,18 @@ function handleClick(evt) {
     // TODO: add line to update in-memory board
     board[y][x] = currPlayer
     placeInTable(y, x);
-    //sets player position to wherever is clicked and places in table
+    // function defined earlier, called here,
+    // sets player position to wherever is clicked and places in table
 
     // check for win
     if (checkForWin()) {
-        return endGame(`Player ${currPlayer} won!`);
+        return endGame(`Player ${currPlayer} won!`); // alert msg
     }
 
     // check for tie
     // TODO: check if all cells in board are filled; if so call, call endGame
-    // checks to see if every cell has been filled before a winner has been declared. This would = a tie
+    // Checks to see if every cell on board has been filled 
+    // before a winner has been declared
     if (board.every(row => row.every(cell => cell))) {
         return endGame('Tie!');
     }
@@ -147,10 +154,12 @@ function checkForWin() {
 
     // TODO: read and understand this code. Add comments to help you.
     // This code iterates through the Connect Four board. 
-    // The outer loop is iterating through each row of the board (HEIGHT) while the inner loop is iterating through each column (WIDTH) of the board.
+    // The outer loop is iterating each row of the board (HEIGHT) 
+    // while the inner loop is iterating each column (WIDTH).
     // The two loops together = looping cell by cell
-    // The four constants (horiz, vert, diagDR, and diagDL) represent all possible ways to win - horizontally, vertically, diagonally from the bottom left to the top right, and diagonally from the bottom right to the top left.
-    // The four constants account for each potential location/relationship of connecting matching pieces.
+    // The four constants (horiz, vert, diagDR, and diagDL) 
+    // represent all ways to win: horizontally, vertically, diagonally L/R.
+    // The four constants account for each potential "y-x" of connecting matching pieces.
 
     for (let y = 0; y < HEIGHT; y++) {
         for (let x = 0; x < WIDTH; x++) {
