@@ -27,14 +27,14 @@ function makeHtmlBoard() {
     // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
     const board = document.getElementById("board")
     // TODO: add comment for this code
-    // This code creates the top row and each of it's cells,
-    // gives it an id="column-top", and adds the click listener(to be defined later) 
-    //for each column where we click to drop pieces, then appends it to the board
+    // creates top row and all of the headcells,
+    // gives an id="column-top" and adds the click listener(to be defined later) 
+    //for each column where players click to drop pieces, then appends it to the board
     const top = document.createElement("tr");
     top.setAttribute("id", "column-top");
     top.addEventListener("click", handleClick);
 
-    // the loop that creates the cells and appends them
+    // the for loop that creates the cells and appends them
     for (let x = 0; x < WIDTH; x++) {
         const headCell = document.createElement("td");
         headCell.setAttribute("id", x);
@@ -45,12 +45,12 @@ function makeHtmlBoard() {
 
     // TODO: add comment for this code
     // A for loop that creates a row every iteration.
-    // Each "tr" is id'd from 0-HEIGHT(HEIGHT = 6), starting with 0-0, 1-0 for second, and so on.
-    // Then appends them to the board. 
-    // Variable y holds how many *rows in total*(both y and x depend on earlier designated HEIGHT/WIDTH).
+    // Each "tr" given id from 0-HEIGHT(max HEIGHT = 6), starting with 0-0, 1-0 for second, and so on.
+    // Appends them to the board. 
+    // Variable y holds how many *rows in total* (both y/x depend on earlier designated HEIGHT/WIDTH).
     // Variable x holds how many *cells per row.* 
     // Then,"td" are created, with id's set to their position in the table, "y-x"
-    // We append rows/their cells to the board, making main part of board.
+    // Append rows/their cells to the board, making main part of board.
     for (let y = 0; y < HEIGHT; y++) {
         const row = document.createElement("tr");
         for (let x = 0; x < WIDTH; x++) {
@@ -94,7 +94,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
     // TODO: pop up alert message
-    alert(msg) // specific msg is designated later
+    alert(msg) // specific msg designated later
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -153,13 +153,13 @@ function checkForWin() {
     }
 
     // TODO: read and understand this code. Add comments to help you.
-    // This code iterates through the Connect Four board. 
-    // The outer loop is iterating each row of the board (HEIGHT) 
+    // Loops through the Connect Four board. 
+    // Outer loop is iterating each row of the board (HEIGHT) 
     // while the inner loop is iterating each column (WIDTH).
     // The two loops together = looping cell by cell
     // The four constants (horiz, vert, diagDR, and diagDL) 
     // represent all ways to win: horizontally, vertically, diagonally L/R.
-    // The four constants account for each potential "y-x" of connecting matching pieces.
+    // The four constants account for each "y-x" of potential connecting/matching pieces.
 
     for (let y = 0; y < HEIGHT; y++) {
         for (let x = 0; x < WIDTH; x++) {
